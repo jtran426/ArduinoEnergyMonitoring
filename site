@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<title>Rehrig Energy Monitoring (AT)</title>
+</head>
+
+<center>
+<img src="RehrigLogo2.jpg" width="600" height="200"/>
+</center>
+
+<center><strong><font size="12">
+Arduino Energy Monitoring (AT Plant)</font></strong></center>
+
+<center>
+<table width = 600 border = 1 cellspacing=2 cellpadding=2>
+  <tr bgcolor=##00ff00>
+    <th width = 200>    </th>
+    <th width = 200>Voltage (V)</th>
+    <th width = 200>Current (A)</th>
+    <th width = 200>Power (kW/h)</th>
+  </tr>
+  <tr>
+    <td>LINE 1</td>
+    <td>480</td> 
+    <td>400</td> 
+    <td>192</td> 
+  </tr>
+  <tr>
+    <td>LINE 2</td>
+    <td>480</td> 
+    <td>400</td> 
+    <td>192</td> 
+  </tr>
+  <tr>
+    <td>LINE 3</td>
+    <td>480</td> 
+    <td>400</td> 
+    <td>192</td> 
+  </tr>
+</center>
+</table>
+<p>                      </p>
+<center>
+<table width = 600 border = 1 cellspacing=2 cellpadding=2>
+  <tr bgcolor=##00ff00>
+    <th width = 200>    </th>
+    <th width = 200>Voltage (V)</th>
+    <th width = 200>Current (A)</th>
+    <th width = 200>Power (kW/h)</th>
+  </tr>
+  <tr>
+    <td>AVG.</td>
+    <td>480</td> 
+    <td>400</td> 
+    <td>192</td> 
+  </tr>
+</center>
+</table>
+
+<p id="datetime"></p>
+
+<script>
+  var now = new Date();
+  var datetime = now.toLocaleString();
+  document.getElementById("datetime").innerHTML = datetime;
+</script>
+
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <center>
+    <style type="text/css">      
+      html, body, #container { 
+        width: 100%; height: 75%; margin: 0; padding: 0; 
+      } 
+    </style>
+    </center>
+<body>  
+    <div id="container"></div>
+    <script>
+      anychart.onDocumentReady(function () {
+  
+        // add data
+        var data = [
+          ["JAN", 10, 00, 00],
+          ["FEB", 40, 00, 00],
+          ["MAR", 60, 00, 00],
+          ["APR", 90, 10, 00],
+          ["MAY", 120, 20, 00],
+          ["JUN", 130, 50, 10],
+          ["JUL", 150, 60, 10],
+          ["AUG", 160, 90, 10],
+          ["SEP", 160, 100, 40],
+          ["OCT", 170, 110, 50],
+          ["NOV", 170, 130, 60],
+          ["DEC", 170, 140, 70]
+        ];
+        var dataSet = anychart.data.set(data);
+        var firstSeriesData = dataSet.mapAs({x: 0, value: 1});
+        var secondSeriesData = dataSet.mapAs({x: 0, value: 2});
+        var thirdSeriesData = dataSet.mapAs({x: 0, value: 3});
+
+        var chart = anychart.line();
+
+        var firstSeries = chart.line(firstSeriesData);
+        firstSeries.name("Phase 1");
+        var secondSeries = chart.line(secondSeriesData);
+        secondSeries.name("Phase 2");
+        var thirdSeries = chart.line(thirdSeriesData);
+        thirdSeries.name("Phase 3");
+
+        chart.legend().enabled(true);
+        chart.title("Current Energy Monitoring");
+        chart.container("container");
+        chart.draw();
+        });
+    </script>
+  </body>
+</html>
